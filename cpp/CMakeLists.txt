@@ -20,7 +20,7 @@ set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
-find_package(Boost 1.78 COMPONENTS unit_test_framework REQUIRED)
+find_package(Boost 1.71 COMPONENTS unit_test_framework REQUIRED)
 message(STATUS "Boost version: ${Boost_VERSION}")
 
 add_subdirectory(src)
