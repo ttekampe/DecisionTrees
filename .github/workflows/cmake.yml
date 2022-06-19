@@ -20,6 +20,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install g++-12 and gcc-12
+      run: |
+        sudo apt update
+        sudo apt install -y g++-12 gcc-12
+
     - name: Install Boost
       run: sudo apt install -y libboost-all-dev
 
