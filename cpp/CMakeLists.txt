@@ -7,10 +7,12 @@ project(
     LANGUAGES CXX
 )
 
+include(CTest)
+enable_testing()
+
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-include(CTest)
 
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
