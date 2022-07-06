@@ -1,4 +1,4 @@
-cmake_minimum_required ( VERSION 3.23.2 )
+cmake_minimum_required ( VERSION 3.20.0 )
 
 project(
     DecisionTree 
@@ -12,6 +12,10 @@ enable_testing()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+
+set(CMAKE_CXX_FLAGS_RELEASE "-O2 -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -g3")
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")

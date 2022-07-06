@@ -4,31 +4,40 @@
 #include <string>
 #include <vector>
 
-
 class ILoss {
- public:
-  virtual double operator()(const double& truth, const double& prediction,
-                            const double& eps) const = 0;
-  virtual double operator()(const std::vector<double>& truth,
-                            const std::vector<double>& prediction,
-                            const double& eps) const = 0;
+public:
+  explicit ILoss(const std::string& name) : m_name_(name) {}; 
+  virtual double operator()(const std::vector<double> &truth,
+                            const std::vector<double> &prediction) const = 0;
   virtual ~ILoss() = default;
-  std::string getName() const { return name; }
+  std::string getName() const { return m_name_; }
 
- protected:
-  std::string name;
+private:
+  std::string m_name_;
 };
 
 class LogLoss : public ILoss {
- public:
-  LogLoss();
+public:
+  explicit LogLoss(double eps = 1e-15) : ILoss("LogLoss"), m_eps_(eps) {};
 
-  double operator()(const double& truth, const double& prediction,
-                    const double& eps = 1e-15) const override;
-  double operator()(const std::vector<double>& truth,
-                    const std::vector<double>& prediction,
-                    const double& eps = 1e-15) const override;
-  ~LogLoss() final = default;
+  double operator()(const double &truth,
+                    const double &prediction) const;
+  double operator()(const std::vector<double> &truth,
+                    const std::vector<double> &prediction) const override;
+  ~LogLoss() override = default;
+
+private:
+  double m_eps_;
 };
 
-#endif  // CPP_INCLUDE_LOSS_H_
+class Gini : public ILoss {
+public:
+  Gini() : ILoss("Gini") {};
+
+  double operator()(const std::vector<double> &truth,
+                    const std::vector<double> &prediction) const override;
+
+  ~Gini() override = default;
+};
+
+#endif // CPP_INCLUDE_LOSS_H_

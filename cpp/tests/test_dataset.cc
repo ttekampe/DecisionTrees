@@ -1,7 +1,8 @@
 #include <dataset.h>
 #define BOOST_TEST_MODULE DatasetTest
-#include <vector>
 #include <boost/test/unit_test.hpp>
+#include <cstdlib>
+#include <vector>
 
 BOOST_AUTO_TEST_SUITE(DatasetTest)
 
@@ -10,7 +11,7 @@ std::vector<double> ConvertVectorToDouble(const std::vector<T>& some_vector) {
   return std::vector<double>(some_vector.begin(), some_vector.end());
 }
 
-BOOST_AUTO_TEST_CASE(feature_vector_test) {
+BOOST_AUTO_TEST_CASE(data_set_test) {
   std::vector<float> float_values{42.0f, 3.14f};
   std::vector<double> double_values{42.0, 3.14};
   std::vector<int> int_values{42, 3};
@@ -67,6 +68,29 @@ BOOST_AUTO_TEST_CASE(feature_vector_test) {
   auto bool_values_d = ConvertVectorToDouble(bool_values);
   BOOST_CHECK_EQUAL_COLLECTIONS(bool_values_d.begin(), bool_values_d.end(),
                                 bool_feature.begin(), bool_feature.end());
+}
+
+BOOST_AUTO_TEST_CASE(data_set_from_csv_test) {
+  auto test_data_path = std::string(std::getenv("TEST_DATA_DIR"));
+  auto csv_file = test_data_path + "/reduced_iris.csv";
+
+  BOOST_TEST_MESSAGE("Reading " + csv_file);
+
+  DataSet test_data(csv_file);
+
+  int expected_length{100};
+
+  BOOST_CHECK_EQUAL(test_data.getSize(), expected_length);
+
+  std::vector<std::string> expected_colum_names = {
+      "sepal length (cm)", "sepal width (cm)", "petal length (cm)",
+      "petal width (cm)", "target"};
+
+  auto actual_column_names = test_data.GetColumnNames();
+
+  BOOST_CHECK_EQUAL_COLLECTIONS(
+      actual_column_names.begin(), actual_column_names.end(),
+      expected_colum_names.begin(), expected_colum_names.end());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

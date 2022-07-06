@@ -6,6 +6,9 @@ add_library(dataset dataset.cc)
 
 add_library(loss loss.cc)
 
+add_library(decisiontree decisiontree.cc)
+target_link_libraries(decisiontree dataset loss)
+
 source_group(
   TREE "${DecisionTree_SOURCE_DIR}/include"
   PREFIX "Header Files"
