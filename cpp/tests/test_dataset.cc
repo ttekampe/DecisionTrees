@@ -7,7 +7,7 @@
 BOOST_AUTO_TEST_SUITE(DatasetTest)
 
 template <typename T>
-std::vector<double> ConvertVectorToDouble(const std::vector<T>& some_vector) {
+std::vector<double> ConvertVectorToDouble(const std::vector<T> &some_vector) {
   return std::vector<double>(some_vector.begin(), some_vector.end());
 }
 
@@ -72,19 +72,47 @@ BOOST_AUTO_TEST_CASE(data_set_test) {
 
 BOOST_AUTO_TEST_CASE(data_set_from_csv_test) {
   auto test_data_path = std::string(std::getenv("TEST_DATA_DIR"));
-  auto csv_file = test_data_path + "/reduced_iris.csv";
+  auto csv_file = test_data_path + "/breast_cancer.csv";
 
   BOOST_TEST_MESSAGE("Reading " + csv_file);
 
   DataSet test_data(csv_file);
 
-  int expected_length{100};
+  int expected_length{569};
 
   BOOST_CHECK_EQUAL(test_data.getSize(), expected_length);
 
-  std::vector<std::string> expected_colum_names = {
-      "sepal length (cm)", "sepal width (cm)", "petal length (cm)",
-      "petal width (cm)", "target"};
+  std::vector<std::string> expected_colum_names = {"mean radius",
+                                                   "mean texture",
+                                                   "mean perimeter",
+                                                   "mean area",
+                                                   "mean smoothness",
+                                                   "mean compactness",
+                                                   "mean concavity",
+                                                   "mean concave points",
+                                                   "mean symmetry",
+                                                   "mean fractal dimension",
+                                                   "radius error",
+                                                   "texture error",
+                                                   "perimeter error",
+                                                   "area error",
+                                                   "smoothness error",
+                                                   "compactness error",
+                                                   "concavity error",
+                                                   "concave points error",
+                                                   "symmetry error",
+                                                   "fractal dimension error",
+                                                   "worst radius",
+                                                   "worst texture",
+                                                   "worst perimeter",
+                                                   "worst area",
+                                                   "worst smoothness",
+                                                   "worst compactness",
+                                                   "worst concavity",
+                                                   "worst concave points",
+                                                   "worst symmetry",
+                                                   "worst fractal dimension",
+                                                   "target"};
 
   auto actual_column_names = test_data.GetColumnNames();
 
