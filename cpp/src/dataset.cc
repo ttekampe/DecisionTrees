@@ -120,3 +120,12 @@ void DataSet::ToCSV(const std::string &csv_file) const {
   }
 
 }
+
+Row DataSet::operator[](const size_t idx) const {
+  Row row;
+  for (const auto& feature_name : m_column_names_){
+    row[feature_name] = operator[](feature_name)[idx];
+  }
+  return row;
+}
+

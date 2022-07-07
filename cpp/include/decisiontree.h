@@ -58,16 +58,15 @@ public:
   explicit Node(const double &prediction, const int &support_0,
                 const int &support_1, const int& depth)
       : m_prediction_(prediction), m_support_0(support_0),
-        m_support_1(support_1), m_depth_(depth) {
+        m_support_1(support_1), m_depth_(depth), m_left_(nullptr), m_right_(nullptr) {
     m_node_type_ = NodeType::leaf;
-    m_left_ = nullptr;
-    m_right_ = nullptr;
   }
 
-  double predict_proba(const double &value) const;
   void split(const DataSet &data_set, const Column &truth,
              const HyperParameters &hyp_par, bool recursive,
              const int current_depth = 0, Index subset_indices = Index());
+  double predict_proba(const double &value) const;
+  double predict_proba(const Row &row) const;
   Column predict_proba(const Column &feature_vector) const;
   Column predict_proba(const DataSet &data_set) const;
   inline void print() const {

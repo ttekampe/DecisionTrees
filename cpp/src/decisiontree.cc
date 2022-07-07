@@ -30,6 +30,16 @@ std::ostream &operator<<(std::ostream &os, const NodeType &obj) {
   return os;
 }
 
+double Node::predict_proba(const Row &row) const {
+  if (m_node_type_ == NodeType::leaf)
+    return m_prediction_;
+
+  if (row.at(m_feature_name_) <= m_threshold_) {
+    return m_left_->predict_proba(row);
+  }
+  return m_right_->predict_proba(row);
+}
+
 double Node::predict_proba(const double &value) const {
   if (m_node_type_ == NodeType::leaf)
     return m_prediction_;
@@ -44,7 +54,7 @@ Column Node::predict_proba(const Column &feature_vector) const {
   if (feature_vector.empty()) {
     throw std::logic_error("Predict received empty feature vector");
   }
-  auto rv = Column();
+  Column rv;
   rv.reserve(feature_vector.size());
   std::transform(
       feature_vector.begin(), feature_vector.end(), std::back_inserter(rv),
@@ -54,7 +64,13 @@ Column Node::predict_proba(const Column &feature_vector) const {
 }
 
 Column Node::predict_proba(const DataSet &data_set) const {
-  return predict_proba(data_set[m_feature_name_]);
+  Column prediction;
+  prediction.reserve(data_set.getSize());
+  for (auto idx{0}; idx < data_set.getSize(); ++idx){
+    prediction.push_back(predict_proba(data_set[idx]));
+  }
+  return prediction;
+
 }
 
 void Node::split(const DataSet &data_set, const Column &truth,

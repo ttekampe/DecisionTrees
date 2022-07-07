@@ -10,7 +10,7 @@ BOOST_AUTO_TEST_SUITE(DecisionTreeTest)
 
 BOOST_AUTO_TEST_CASE(decision_tree_node_test) {
   auto test_data_path = std::string(std::getenv("TEST_DATA_DIR"));
-  auto csv_file = test_data_path + "/reduced_iris.csv";
+  auto csv_file = test_data_path + "/breast_cancer.csv";
 
   BOOST_TEST_MESSAGE("Reading " + csv_file);
 
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(decision_tree_node_test) {
 
 BOOST_AUTO_TEST_CASE(decision_tree_test) {
   auto test_data_path = std::string(std::getenv("TEST_DATA_DIR"));
-  auto csv_file = test_data_path + "/reduced_iris.csv";
+  auto csv_file = test_data_path + "/breast_cancer.csv";
 
   BOOST_TEST_MESSAGE("Reading " + csv_file);
 
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(decision_tree_test) {
 
   HyperParameters hyp_param;
   hyp_param.max_depth = 4;
-  hyp_param.criterion = std::make_shared<LogLoss>();
+  hyp_param.criterion = std::make_shared<Gini>();
 
   DecisionTree dt(hyp_param);
   dt.fit(features, truth);

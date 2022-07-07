@@ -2,14 +2,17 @@
 #define CPP_INCLUDE_DATASET_H_
 
 #include <algorithm>
+#include <cstddef>
 #include <stdexcept>
 #include <string>
 #include <vector>
 #include <numeric>
 #include <iostream>
+#include <map>
 
 using Index = std::vector<int>;
 using Column = std::vector<double>;
+using Row = std::map<std::string, double, std::less<> >;
 
 class DataSet {
  public:
@@ -21,6 +24,8 @@ class DataSet {
   const Column& operator[](const char* columnName) const;
 
   const Column& operator[](const std::string& columnName) const;
+
+  Row operator[](const size_t idx) const;
 
   inline const Index& getIndex() const {
     return m_index_;
